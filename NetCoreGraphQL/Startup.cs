@@ -28,10 +28,16 @@ namespace NetCoreGraphQL.Api
 
             services.AddSingleton<IApplicationRepository, ApplicationRepository>();
             services.AddSingleton<IDecisionRepository, DecisionRepository>();
+            services.AddSingleton<IApplicantRepository, ApplicantRepository>();
+
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
+
             services.AddSingleton<ApplicationDataQuery>();
+
             services.AddSingleton<ApplicationType>();
             services.AddSingleton<DecisionType>();
+            services.AddSingleton<ApplicantType>();
+
             var sp = services.BuildServiceProvider();
             services.AddSingleton<ISchema>(new ApplicationDataSchema(new FuncDependencyResolver(type => sp.GetService(type))));
         }

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GenFu" Version="1.4.22" />
+    <PackageReference Include="graphiql" Version="1.1.0" />
+    <PackageReference Include="GraphQL" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NetCoreGraphQL.Data\NetCoreGraphQL.Data.csproj" />
+    <ProjectReference Include="..\NetCoreGraphSQL.Shared\NetCoreGraphSQL.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

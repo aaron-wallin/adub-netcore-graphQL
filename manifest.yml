@@ -1,0 +1,6 @@
+---
+applications:
+- name: adub-graphql
+  buildpack: dotnet_core_buildpack  
+  memory: 512M
+  instances: 1  

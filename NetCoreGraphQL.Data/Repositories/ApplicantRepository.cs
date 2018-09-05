@@ -25,8 +25,12 @@ namespace NetCoreGraphQL.Data.Repositories
 
         private void LoadData()
         {
-            GenFu.GenFu.Configure<Applicant>().Fill(_ => _.ApplicationId).WithinRange(1, 25);
-            _applicants = A.ListOf<Applicant>();
+            int i = 54276;
+
+            GenFu.GenFu.Configure<Applicant>()
+                .Fill(_ => _.ApplicationId).WithinRange(1, 500)
+                .Fill(_ => _.Id, () => { return i++; });
+            _applicants.AddRange(A.ListOf<Applicant>(2000));
         }
     }
 }

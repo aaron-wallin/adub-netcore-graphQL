@@ -7,10 +7,14 @@ namespace NetCoreGraphQL.Api.Models
     public class ApplicationDataQuery : ObjectGraphType
     {
         private readonly IApplicationRepository applicationRepository;
+        private readonly IDecisionRepository decisionRepository;
+        private readonly IApplicantRepository applicantRepository;
 
-        public ApplicationDataQuery(IApplicationRepository applicationRepository)
+        public ApplicationDataQuery(IApplicationRepository applicationRepository, IDecisionRepository decisionRepository, IApplicantRepository applicantRepository)
         {
             this.applicationRepository = applicationRepository;
+            this.decisionRepository = decisionRepository;
+            this.applicantRepository = applicantRepository;
 
             Field<ApplicationType>(
                 "application",
@@ -20,9 +24,22 @@ namespace NetCoreGraphQL.Api.Models
 
             Field<ListGraphType<ApplicationType>>(
                 "applications",
-                //arguments: new QueryArguments(new QueryArgument<StringGraphType> { Name = "lenderCode" }),
                 resolve: _ => applicationRepository.All()
-                );            
+                );
+
+            Field<ListGraphType<DecisionType>>(
+                "decisions",
+                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "applicationId" }),
+                resolve: _ => this.decisionRepository.All(_.GetArgument<int>("applicationId")), description: "The application's decisions"
+                );
+
+            Field<ListGraphType<ApplicantType>>(
+                "applicants",
+                arguments: new QueryArguments(new QueryArgument<IntGraphType> { Name = "applicationId" }),
+                resolve: _ => this.applicantRepository.All(_.GetArgument<int>("applicationId")), description: "The application's applicants"
+                );
+
+
         }
     }
 }

@@ -28,10 +28,13 @@ namespace NetCoreGraphQL.Data.Repositories
 
         private void LoadData()
         {
+            int i = 1;
+            
             GenFu.GenFu.Configure<Application>()
-                .Fill(_ => _.Id )
-                .WithinRange(1, 25);
-            _apps = A.ListOf<Application>();
+                .Fill(_ => _.Id, () => { return i++; })
+                .Fill(_ => _.LoanType).WithRandom(new string[] { "Auto", "Mortgage", "Credit Card" })
+                .Fill(_ => _.LenderCode).WithRandom(new string[] { "702", "331", "999" });
+            _apps.AddRange(A.ListOf<Application>(500));
         }
     }    
 }

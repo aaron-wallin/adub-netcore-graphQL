@@ -29,6 +29,7 @@ namespace NetCoreGraphQL.Api
             services.AddSingleton<IApplicationRepository, ApplicationRepository>();
             services.AddSingleton<IDecisionRepository, DecisionRepository>();
             services.AddSingleton<IApplicantRepository, ApplicantRepository>();
+            services.AddSingleton<IAddressRepository, AddressRepository>();
 
             services.AddSingleton<IDocumentExecuter, DocumentExecuter>();
 
@@ -37,6 +38,7 @@ namespace NetCoreGraphQL.Api
             services.AddSingleton<ApplicationType>();
             services.AddSingleton<DecisionType>();
             services.AddSingleton<ApplicantType>();
+            services.AddSingleton<AddressType>();
 
             var sp = services.BuildServiceProvider();
             services.AddSingleton<ISchema>(new ApplicationDataSchema(new FuncDependencyResolver(type => sp.GetService(type))));
@@ -50,7 +52,7 @@ namespace NetCoreGraphQL.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseGraphiQl();
+            app.UseGraphiQl("api/graph");
             app.UseMvc();
         }
     }

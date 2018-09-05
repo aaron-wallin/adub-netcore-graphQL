@@ -1,6 +1,7 @@
 ﻿using GenFu;
 using NetCoreGraphSQL.Shared.Models;
 using NetCoreGraphSQL.Shared.RepoDefinitions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -28,8 +29,15 @@ namespace NetCoreGraphQL.Data.Repositories
 
         private void LoadData()
         {
-            GenFu.GenFu.Configure<Decision>().Fill(_ => _.ApplicationId).WithinRange(1, 25);
-            _decisions = A.ListOf<Decision>();
+            int i = 92736;
+
+            GenFu.GenFu.Configure<Decision>()
+                .Fill(_ => _.ApplicationId).WithinRange(1, 500)
+                .Fill(_ => _.Id, () => { return i++; })
+                .Fill(_ => _.CurrentDecision).WithRandom(new bool[] { true, false })
+                .Fill(_ => _.DecisionResult).WithRandom(new string[] { "Approved", "Declined", "Referred" })
+                .Fill(_ => _.DecisionDate, () => { return DateTime.Now; });
+            _decisions.AddRange(A.ListOf<Decision>(5000));
         }
     }
 }

@@ -13,7 +13,7 @@ namespace NetCoreGraphQL.Api.Models.GraphTypes
         {
             this.decisionRepository = decisionRepository;
             this.applicantRepository = applicantRepository;
-
+           
             Field(_ => _.Id);
             Field(_ => _.LenderCode);
             Field(_ => _.LoanType);
